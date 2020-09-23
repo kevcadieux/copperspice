@@ -3,6 +3,12 @@ add_library(CopperSpice::CsWebKit ALIAS CsWebKit)
 
 set_target_properties(CsWebKit PROPERTIES OUTPUT_NAME CsWebKit${BUILD_ABI})
 
+if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.16.0" AND MSVC) 
+    target_precompile_headers(CsWebKit PRIVATE
+      "$<$<COMPILE_LANGUAGE:CXX>:<qdatastream.h$<ANGLE-R>>"
+)
+endif()
+
 add_definitions(
    -DWTF_CHANGES
    -DBUILDING_WEBKIT
